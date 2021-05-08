@@ -1,0 +1,297 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
+
+-- Started on 2021-03-27 21:59:39
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 203 (class 1259 OID 16482)
+-- Name: carro; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.carro (
+    cor character varying(8),
+    marcha character varying(10),
+    combustivel character varying(10),
+    num_portas integer,
+    chassi character varying(20),
+    valor double precision,
+    mod_id integer,
+    id integer NOT NULL,
+    ano character varying(10)
+);
+
+
+ALTER TABLE public.carro OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 16457)
+-- Name: cliente; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cliente (
+    nome character varying(30),
+    telefone character varying(20),
+    email character varying(20),
+    cpf character varying(15) NOT NULL,
+    rua character varying(30),
+    numero integer,
+    bairro character varying(20),
+    cidade character varying(20)
+);
+
+
+ALTER TABLE public.cliente OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 16452)
+-- Name: funcionario; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.funcionario (
+    bairro character varying(20),
+    cpf character varying(15),
+    email character varying(30),
+    id integer NOT NULL,
+    nome character varying(30),
+    numero integer,
+    rua character varying(30),
+    telefone character varying(20),
+    cidade character varying(20),
+    data character varying(20)
+);
+
+
+ALTER TABLE public.funcionario OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16493)
+-- Name: modelo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.modelo (
+    modelo character varying(20),
+    codigo integer NOT NULL
+);
+
+
+ALTER TABLE public.modelo OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 16462)
+-- Name: venda; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.venda (
+    codigo integer NOT NULL,
+    func_id integer,
+    car_id integer,
+    client_cpf character varying,
+    pagamento character varying(20),
+    date character varying(20)
+);
+
+
+ALTER TABLE public.venda OWNER TO postgres;
+
+--
+-- TOC entry 3016 (class 0 OID 16482)
+-- Dependencies: 203
+-- Data for Name: carro; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.carro (cor, marcha, combustivel, num_portas, chassi, valor, mod_id, id, ano) FROM stdin;
+Amarelo	Automaica	Gasolina	4		20	1	1	20/04/2020
+Branco	Automaica	Gasolina	2		400000	1	2	04/12/2020
+Azul	Automaica	Gasolina	2		3123123	2	3	2010
+\.
+
+
+--
+-- TOC entry 3014 (class 0 OID 16457)
+-- Dependencies: 201
+-- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cliente (nome, telefone, email, cpf, rua, numero, bairro, cidade) FROM stdin;
+Enuch Santos De Araujo	84	enuch	1	1	1	1	1
+Enuch Santos De Araujo	2	enuch	2	san	1	1	1
+\.
+
+
+--
+-- TOC entry 3013 (class 0 OID 16452)
+-- Dependencies: 200
+-- Data for Name: funcionario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.funcionario (bairro, cpf, email, id, nome, numero, rua, telefone, cidade, data) FROM stdin;
+bairro	1	enuch	1	Enuch Santos	1	rua	84	cidade	10/09/2020
+igapo	2	joelson@	2	Joelson Santos	1	santo	8499	natal	10/08/2019
+\.
+
+
+--
+-- TOC entry 3017 (class 0 OID 16493)
+-- Dependencies: 204
+-- Data for Name: modelo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.modelo (modelo, codigo) FROM stdin;
+Palio	1
+Fiat	2
+\.
+
+
+--
+-- TOC entry 3015 (class 0 OID 16462)
+-- Dependencies: 202
+-- Data for Name: venda; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.venda (codigo, func_id, car_id, client_cpf, pagamento, date) FROM stdin;
+1	1	1	1	Especie	1
+2	1	1	1	Caartão	1
+3	2	1	1	Especie	2010
+4	1	1	1	Dinheiro	2010
+5	2	1	1	Cartao visa	2099
+\.
+
+
+--
+-- TOC entry 2875 (class 2606 OID 16486)
+-- Name: carro carro_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.carro
+    ADD CONSTRAINT carro_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2868 (class 2606 OID 16461)
+-- Name: cliente cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cliente
+    ADD CONSTRAINT cliente_pkey PRIMARY KEY (cpf);
+
+
+--
+-- TOC entry 2866 (class 2606 OID 16456)
+-- Name: funcionario funcionario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.funcionario
+    ADD CONSTRAINT funcionario_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2878 (class 2606 OID 16497)
+-- Name: modelo modelo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.modelo
+    ADD CONSTRAINT modelo_pkey PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2873 (class 2606 OID 16469)
+-- Name: venda venda_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.venda
+    ADD CONSTRAINT venda_pkey PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2869 (class 1259 OID 16492)
+-- Name: fki_car_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_car_id ON public.venda USING btree (car_id);
+
+
+--
+-- TOC entry 2870 (class 1259 OID 16481)
+-- Name: fki_cpf_; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_cpf_ ON public.venda USING btree (client_cpf);
+
+
+--
+-- TOC entry 2871 (class 1259 OID 16475)
+-- Name: fki_func_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_func_id ON public.venda USING btree (func_id);
+
+
+--
+-- TOC entry 2876 (class 1259 OID 16503)
+-- Name: fki_mod_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_mod_id ON public.carro USING btree (mod_id);
+
+
+--
+-- TOC entry 2881 (class 2606 OID 16487)
+-- Name: venda car_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.venda
+    ADD CONSTRAINT car_id FOREIGN KEY (car_id) REFERENCES public.carro(id) NOT VALID;
+
+
+--
+-- TOC entry 2880 (class 2606 OID 16476)
+-- Name: venda client_cpf; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.venda
+    ADD CONSTRAINT client_cpf FOREIGN KEY (client_cpf) REFERENCES public.cliente(cpf) NOT VALID;
+
+
+--
+-- TOC entry 2879 (class 2606 OID 16470)
+-- Name: venda func_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.venda
+    ADD CONSTRAINT func_id FOREIGN KEY (func_id) REFERENCES public.funcionario(id) NOT VALID;
+
+
+--
+-- TOC entry 2882 (class 2606 OID 16498)
+-- Name: carro mod_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.carro
+    ADD CONSTRAINT mod_id FOREIGN KEY (mod_id) REFERENCES public.modelo(codigo) NOT VALID;
+
+
+-- Completed on 2021-03-27 21:59:41
+
+--
+-- PostgreSQL database dump complete
+--
+
